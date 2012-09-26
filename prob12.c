@@ -1,37 +1,60 @@
 #include <stdio.h>
 
-#define odd(x) ((x & 1) ? (x) : (x = (x + 1)))
+int retrieveNumberOfFactors(int number){
+	int i = 1, result = 0;
+	printf("triangle number: %d\n", number);
+	for(; i <= number; i++)
+		if((number % i) == 0)
+			result++;
 
-unsigned long int prime_gen(int start){
+	return result;
+}
 
-	unsigned int k, found = 1;
+
+int retrieveTriangleNumberByIndex(int index) {
+	int i = 2, result = 1;
+
+	if(index <= 0)
+		return -1;
+
+	for(; i <= index; i++)
+		result += i;
+
+	return result;
+}
+
+int prim(int tal){
+	int i = 1, summa = 0;
+
+	for(;i<tal;i++){
+		if(tal%i==0){
+			if((i*i)>tal){
+				summa*=2;
+				break;
+			}
+			else if((i*i)==tal){
+				summa*=2;
+				summa++;
+				break;
+			}
+			else{
+				summa++;
+			}
+		}
+	}
+	return summa;
+}
+
 	
-	if(start == 2)
-		return 2;
-
-	for(odd(start); ; start += 2, found = 1){		// all even numbers are not prime
-		for(k = 2; k < start; ++k)
-			if(!(start % k))
-				found = 0;
-		if(found)
+int main() {
+	int i = 1, tal=0;
+	while(1){
+		tal += i;
+		if(prim(tal) > 500){
+			printf("i:%d, tal:%d\n", i, tal);
 			break;
+		}
+		i++;
 	}
-
-	return start;
 }
-
-int main(){
-
-	long double tmp = 0, aux = 2;
-
-	for(; aux < 1000000; aux = prime_gen(++aux)){
-		tmp += aux;
-	}
-
-	printf("Result : %Lf\n", tmp);
-
-	return 0;
-
-}
-
 
